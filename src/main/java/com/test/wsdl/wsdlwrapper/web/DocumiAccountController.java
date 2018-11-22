@@ -1,8 +1,8 @@
 package com.test.wsdl.wsdlwrapper.web;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.test.wsdl.documi.AccountGetLoginLinkResponse;
-import com.test.wsdl.wsdlwrapper.services.DocumiAccountClient;
+import com.test.wsdl.wsdlwrapper.services.AccountService;
+import com.test.wsdl.wsdlwrapper.services.AsyncAccountHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,11 +13,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class DocumiAccountController {
 
   @Autowired
-  private DocumiAccountClient client;
+  private AccountService accountService;
+
+  @Autowired
+  private AsyncAccountHandler asyncAccountHandler;
 
   @PostMapping("/documi/account/login")
-  public ResponseEntity<AccountGetLoginLinkResponse> getLogin(@RequestBody TokenHolder token) {
-    return ResponseEntity.ok(client.getLogin(token.getToken()));
+  public ResponseEntity<Void> getLogin(@RequestBody TokenHolder token) {
+    /*
+    Questa chiamata é asincrona quindi possiamo invocare senza
+    aspettare il ritorno
+      */
+
+    asyncAccountHandler.receiveAccount(accountService.getLoginResponse(token.getToken()));
+    return ResponseEntity.accepted().build();
   }
 
   static class TokenHolder {

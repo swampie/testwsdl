@@ -1,4 +1,4 @@
-package com.test.wsdl.wsdlwrapper.services;
+package com.test.wsdl.wsdlwrapper.clients;
 
 import com.test.wsdl.documi.AccountGetLoginLinkResponse;
 import com.test.wsdl.documi.AccountGetUserDataResponse;

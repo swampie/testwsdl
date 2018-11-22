@@ -1,14 +1,18 @@
 package com.test.wsdl.wsdlwrapper;
 
-import com.test.wsdl.wsdlwrapper.services.DocumiAccountClient;
-import com.test.wsdl.wsdlwrapper.utils.ObjectFactoryLocator;
+import com.test.wsdl.wsdlwrapper.clients.DocumiAccountClient;
+import com.test.wsdl.wsdlwrapper.services.AccountService;
+import com.test.wsdl.wsdlwrapper.services.AsyncAccountHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 
 @Configuration
+@EnableAsync
 public class BLZConfig {
+
   @Bean
   public Jaxb2Marshaller marshaller() {
 
@@ -18,17 +22,22 @@ public class BLZConfig {
   }
 
   @Bean
-  public ObjectFactoryLocator locator(){
-    return new ObjectFactoryLocator();
+  AsyncAccountHandler asyncAccountHandler() {
+    return new AsyncAccountHandler();
   }
 
+
   @Bean
-  DocumiAccountClient accountClient(Jaxb2Marshaller jaxb2Marshaller){
+  public DocumiAccountClient accountClient(Jaxb2Marshaller jaxb2Marshaller){
       DocumiAccountClient client = new DocumiAccountClient("https://servizi-demo.youdox.it/fatturazione/api/AccountService.svc");
       client.setMarshaller(jaxb2Marshaller);
       client.setUnmarshaller(jaxb2Marshaller);
       return  client;
   }
 
+  @Bean
+  public AccountService accountService(DocumiAccountClient documiAccountClient) {
+    return new AccountService(documiAccountClient);
+  }
 
 }

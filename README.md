@@ -34,4 +34,4 @@ After that the project can be run with the command
 Once the server is started from another console is possible to test
 the endpoint with the following command:
 
-`curl localhost:8080/bank/64261626`
+`curl localhost:8080/documi/account/login -d '{"token":"123"}' -H "content-type:application/json"`
