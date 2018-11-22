@@ -1,10 +1,8 @@
 package com.test.wsdl.wsdlwrapper.services;
 
-import com.test.wsdl.documi.account.AccountGetLoginLinkResponse;
-import com.test.wsdl.documi.account.AccountGetUserDataResponse;
-import com.test.wsdl.documi.account.ObjectFactory;
-
-import org.springframework.stereotype.Component;
+import com.test.wsdl.documi.AccountGetLoginLinkResponse;
+import com.test.wsdl.documi.AccountGetUserDataResponse;
+import com.test.wsdl.documi.ObjectFactory;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 
 import javax.xml.bind.JAXBElement;

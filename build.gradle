@@ -51,7 +51,7 @@ task genJaxb {
 	ext.sourcesDir = "${buildDir}/generated/"
 	ext.classesDir = "${buildDir}/classes/"
 	ext.schema = "${projectDir}/src/main/resources/wsdl/documi/invoice_service.wsdl"
-
+	ext.schemaDir = "${projectDir}/src/main/resources/wsdl/documi/"
 	ext.schemas = ["account":"${projectDir}/src/main/resources/wsdl/documi/account_service.wsdl",
 				   "invoice":"${projectDir}/src/main/resources/wsdl/documi/invoice_service.wsdl",
 				   "exchange":"${projectDir}/src/main/resources/wsdl/documi/exchange_service.wsdl"]
@@ -63,13 +63,12 @@ task genJaxb {
 					classpath: configurations.jaxb.asPath
 			mkdir(dir: sourcesDir)
 			mkdir(dir: classesDir)
-			schemas.each {k , v->
-				println("Generating $k...")
-			xjc(destdir: sourcesDir, schema: v,
-					package: "com.test.wsdl.documi.${k}") {
+			xjc(destdir: sourcesDir, package: 'com.test.wsdl.documi') {
+				schema(dir: schemaDir, includes: "**/*.wsdl")
 				arg(value: "-wsdl")
 				produces(dir: sourcesDir, includes: "**/*.java")
 			}
+
 
 			javac(destdir: classesDir, source: 1.8, target: 1.8, debug: true,
 					debugLevel: "lines,vars,source",
@@ -78,11 +77,13 @@ task genJaxb {
 				include(name: "**/*.java")
 				include(name: "*.java")
 			}
-			}
+
+
 			copy(todir: classesDir) {
 				fileset(dir: sourcesDir, erroronmissingdir: false) {
 					exclude(name: "**/*.java")
 				}
+
 			}
 		}
 	}

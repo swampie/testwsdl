@@ -1,7 +1,7 @@
 package com.test.wsdl.wsdlwrapper.web;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.test.wsdl.documi.account.AccountGetLoginLinkResponse;
+import com.test.wsdl.documi.AccountGetLoginLinkResponse;
 import com.test.wsdl.wsdlwrapper.services.DocumiAccountClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
