@@ -50,8 +50,11 @@ repositories {
 task genJaxb {
 	ext.sourcesDir = "${buildDir}/generated/"
 	ext.classesDir = "${buildDir}/classes/"
-	ext.schema = "${projectDir}/src/main/resources/wsdl/bank.wsdl"
+	ext.schema = "${projectDir}/src/main/resources/wsdl/documi/invoice_service.wsdl"
 
+	ext.schemas = ["account":"${projectDir}/src/main/resources/wsdl/documi/account_service.wsdl",
+				   "invoice":"${projectDir}/src/main/resources/wsdl/documi/invoice_service.wsdl",
+				   "exchange":"${projectDir}/src/main/resources/wsdl/documi/exchange_service.wsdl"]
 	outputs.dir classesDir
 
 	doLast() {
@@ -60,9 +63,10 @@ task genJaxb {
 					classpath: configurations.jaxb.asPath
 			mkdir(dir: sourcesDir)
 			mkdir(dir: classesDir)
-
-			xjc(destdir: sourcesDir, schema: schema,
-					package: "com.test.wsdl.spring") {
+			schemas.each {k , v->
+				println("Generating $k...")
+			xjc(destdir: sourcesDir, schema: v,
+					package: "com.test.wsdl.documi.${k}") {
 				arg(value: "-wsdl")
 				produces(dir: sourcesDir, includes: "**/*.java")
 			}
@@ -74,7 +78,7 @@ task genJaxb {
 				include(name: "**/*.java")
 				include(name: "*.java")
 			}
-
+			}
 			copy(todir: classesDir) {
 				fileset(dir: sourcesDir, erroronmissingdir: false) {
 					exclude(name: "**/*.java")

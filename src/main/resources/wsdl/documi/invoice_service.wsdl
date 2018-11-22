@@ -1,0 +1,347 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" name="InvoicesService" targetNamespace="http://tempuri.org/">
+    <wsp:Policy wsu:Id="BasicHttpBinding_IInvoicesService_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:TransportToken>
+                            <wsp:Policy>
+                                <sp:HttpsToken RequireClientCertificate="false"/>
+                            </wsp:Policy>
+                        </sp:TransportToken>
+                        <sp:AlgorithmSuite>
+                            <wsp:Policy>
+                                <sp:Basic256/>
+                            </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Strict/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                    </wsp:Policy>
+                </sp:TransportBinding>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://tempuri.org/Imports">
+            <xsd:import schemaLocation="https://servizi-demo.youdox.it/fatturazione/api/InvoicesService.svc?xsd=xsd0" namespace="http://tempuri.org/"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="IInvoicesService_Invoices_ListReceived_InputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_ListReceived"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_ListReceived_OutputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_ListReceivedResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_ListReceivedByTimestamp_InputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_ListReceivedByTimestamp"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_ListReceivedByTimestamp_OutputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_ListReceivedByTimestampResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_ListReceivedByFilter_InputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_ListReceivedByFilter"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_ListReceivedByFilter_OutputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_ListReceivedByFilterResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_ListSent_InputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_ListSent"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_ListSent_OutputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_ListSentResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_ListSentByTimestamp_InputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_ListSentByTimestamp"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_ListSentByTimestamp_OutputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_ListSentByTimestampResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_ListSentByFilename_InputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_ListSentByFilename"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_ListSentByFilename_OutputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_ListSentByFilenameResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_ListSentByInvoiceKey_InputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_ListSentByInvoiceKey"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_ListSentByInvoiceKey_OutputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_ListSentByInvoiceKeyResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_ListSentByFilter_InputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_ListSentByFilter"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_ListSentByFilter_OutputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_ListSentByFilterResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_GetStatusReport_InputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_GetStatusReport"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_GetStatusReport_OutputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_GetStatusReportResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_GetConservationReport_InputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_GetConservationReport"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_GetConservationReport_OutputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_GetConservationReportResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_GetConservationProtocol_InputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_GetConservationProtocol"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_GetConservationProtocol_OutputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_GetConservationProtocolResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_SetFlagRead_InputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_SetFlagRead"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_SetFlagRead_OutputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_SetFlagReadResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_SetConservationProtocol_InputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_SetConservationProtocol"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_SetConservationProtocol_OutputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_SetConservationProtocolResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_SetAcceptRejectPA_InputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_SetAcceptRejectPA"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_SetAcceptRejectPA_OutputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_SetAcceptRejectPAResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_GetDownloadLink_InputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_GetDownloadLink"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_GetDownloadLink_OutputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_GetDownloadLinkResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_WhatTimeIsIt_InputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_WhatTimeIsIt"/>
+    </wsdl:message>
+    <wsdl:message name="IInvoicesService_Invoices_WhatTimeIsIt_OutputMessage">
+        <wsdl:part name="parameters" element="tns:Invoices_WhatTimeIsItResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="IInvoicesService">
+        <wsdl:operation name="Invoices_ListReceived">
+            <wsdl:input wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_ListReceived" message="tns:IInvoicesService_Invoices_ListReceived_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_ListReceivedResponse" message="tns:IInvoicesService_Invoices_ListReceived_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_ListReceivedByTimestamp">
+            <wsdl:input wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_ListReceivedByTimestamp" message="tns:IInvoicesService_Invoices_ListReceivedByTimestamp_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_ListReceivedByTimestampResponse" message="tns:IInvoicesService_Invoices_ListReceivedByTimestamp_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_ListReceivedByFilter">
+            <wsdl:input wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_ListReceivedByFilter" message="tns:IInvoicesService_Invoices_ListReceivedByFilter_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_ListReceivedByFilterResponse" message="tns:IInvoicesService_Invoices_ListReceivedByFilter_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_ListSent">
+            <wsdl:input wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_ListSent" message="tns:IInvoicesService_Invoices_ListSent_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_ListSentResponse" message="tns:IInvoicesService_Invoices_ListSent_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_ListSentByTimestamp">
+            <wsdl:input wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_ListSentByTimestamp" message="tns:IInvoicesService_Invoices_ListSentByTimestamp_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_ListSentByTimestampResponse" message="tns:IInvoicesService_Invoices_ListSentByTimestamp_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_ListSentByFilename">
+            <wsdl:input wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_ListSentByFilename" message="tns:IInvoicesService_Invoices_ListSentByFilename_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_ListSentByFilenameResponse" message="tns:IInvoicesService_Invoices_ListSentByFilename_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_ListSentByInvoiceKey">
+            <wsdl:input wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_ListSentByInvoiceKey" message="tns:IInvoicesService_Invoices_ListSentByInvoiceKey_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_ListSentByInvoiceKeyResponse" message="tns:IInvoicesService_Invoices_ListSentByInvoiceKey_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_ListSentByFilter">
+            <wsdl:input wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_ListSentByFilter" message="tns:IInvoicesService_Invoices_ListSentByFilter_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_ListSentByFilterResponse" message="tns:IInvoicesService_Invoices_ListSentByFilter_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_GetStatusReport">
+            <wsdl:input wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_GetStatusReport" message="tns:IInvoicesService_Invoices_GetStatusReport_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_GetStatusReportResponse" message="tns:IInvoicesService_Invoices_GetStatusReport_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_GetConservationReport">
+            <wsdl:input wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_GetConservationReport" message="tns:IInvoicesService_Invoices_GetConservationReport_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_GetConservationReportResponse" message="tns:IInvoicesService_Invoices_GetConservationReport_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_GetConservationProtocol">
+            <wsdl:input wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_GetConservationProtocol" message="tns:IInvoicesService_Invoices_GetConservationProtocol_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_GetConservationProtocolResponse" message="tns:IInvoicesService_Invoices_GetConservationProtocol_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_SetFlagRead">
+            <wsdl:input wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_SetFlagRead" message="tns:IInvoicesService_Invoices_SetFlagRead_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_SetFlagReadResponse" message="tns:IInvoicesService_Invoices_SetFlagRead_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_SetConservationProtocol">
+            <wsdl:input wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_SetConservationProtocol" message="tns:IInvoicesService_Invoices_SetConservationProtocol_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_SetConservationProtocolResponse" message="tns:IInvoicesService_Invoices_SetConservationProtocol_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_SetAcceptRejectPA">
+            <wsdl:input wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_SetAcceptRejectPA" message="tns:IInvoicesService_Invoices_SetAcceptRejectPA_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_SetAcceptRejectPAResponse" message="tns:IInvoicesService_Invoices_SetAcceptRejectPA_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_GetDownloadLink">
+            <wsdl:input wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_GetDownloadLink" message="tns:IInvoicesService_Invoices_GetDownloadLink_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_GetDownloadLinkResponse" message="tns:IInvoicesService_Invoices_GetDownloadLink_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_WhatTimeIsIt">
+            <wsdl:input wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_WhatTimeIsIt" message="tns:IInvoicesService_Invoices_WhatTimeIsIt_InputMessage"/>
+            <wsdl:output wsaw:Action="http://tempuri.org/IInvoicesService/Invoices_WhatTimeIsItResponse" message="tns:IInvoicesService_Invoices_WhatTimeIsIt_OutputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BasicHttpBinding_IInvoicesService" type="tns:IInvoicesService">
+        <wsp:PolicyReference URI="#BasicHttpBinding_IInvoicesService_policy"/>
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Invoices_ListReceived">
+            <soap:operation soapAction="http://tempuri.org/IInvoicesService/Invoices_ListReceived" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_ListReceivedByTimestamp">
+            <soap:operation soapAction="http://tempuri.org/IInvoicesService/Invoices_ListReceivedByTimestamp" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_ListReceivedByFilter">
+            <soap:operation soapAction="http://tempuri.org/IInvoicesService/Invoices_ListReceivedByFilter" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_ListSent">
+            <soap:operation soapAction="http://tempuri.org/IInvoicesService/Invoices_ListSent" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_ListSentByTimestamp">
+            <soap:operation soapAction="http://tempuri.org/IInvoicesService/Invoices_ListSentByTimestamp" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_ListSentByFilename">
+            <soap:operation soapAction="http://tempuri.org/IInvoicesService/Invoices_ListSentByFilename" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_ListSentByInvoiceKey">
+            <soap:operation soapAction="http://tempuri.org/IInvoicesService/Invoices_ListSentByInvoiceKey" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_ListSentByFilter">
+            <soap:operation soapAction="http://tempuri.org/IInvoicesService/Invoices_ListSentByFilter" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_GetStatusReport">
+            <soap:operation soapAction="http://tempuri.org/IInvoicesService/Invoices_GetStatusReport" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_GetConservationReport">
+            <soap:operation soapAction="http://tempuri.org/IInvoicesService/Invoices_GetConservationReport" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_GetConservationProtocol">
+            <soap:operation soapAction="http://tempuri.org/IInvoicesService/Invoices_GetConservationProtocol" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_SetFlagRead">
+            <soap:operation soapAction="http://tempuri.org/IInvoicesService/Invoices_SetFlagRead" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_SetConservationProtocol">
+            <soap:operation soapAction="http://tempuri.org/IInvoicesService/Invoices_SetConservationProtocol" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_SetAcceptRejectPA">
+            <soap:operation soapAction="http://tempuri.org/IInvoicesService/Invoices_SetAcceptRejectPA" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_GetDownloadLink">
+            <soap:operation soapAction="http://tempuri.org/IInvoicesService/Invoices_GetDownloadLink" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Invoices_WhatTimeIsIt">
+            <soap:operation soapAction="http://tempuri.org/IInvoicesService/Invoices_WhatTimeIsIt" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="InvoicesService">
+        <wsdl:port name="BasicHttpBinding_IInvoicesService" binding="tns:BasicHttpBinding_IInvoicesService">
+            <soap:address location="https://servizi-demo.youdox.it/fatturazione/api/InvoicesService.svc"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
