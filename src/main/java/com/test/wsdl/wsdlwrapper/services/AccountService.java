@@ -1,11 +1,11 @@
 package com.test.wsdl.wsdlwrapper.services;
 
-import com.test.wsdl.documi.AccountGetLoginLinkResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.test.wsdl.documi.account.AccountGetLoginLinkResponse;
 import com.test.wsdl.wsdlwrapper.clients.DocumiAccountClient;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.AsyncResult;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.xml.ws.AsyncHandler;
+import javax.xml.ws.Response;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
@@ -18,8 +18,8 @@ public class AccountService {
     this.documiAccountClient = documiAccountClient;
   }
 
-  @Async
-  public CompletableFuture<AccountGetLoginLinkResponse> getLoginResponse(final String token) {
-    return CompletableFuture.completedFuture(documiAccountClient.getLogin(token));
+  public Future<AccountGetLoginLinkResponse> getAsyncLoginResponse(final String token, AsyncHandler<AccountGetLoginLinkResponse> handler) {
+     return documiAccountClient.getAsyncLogin(token, handler);
+
   }
 }

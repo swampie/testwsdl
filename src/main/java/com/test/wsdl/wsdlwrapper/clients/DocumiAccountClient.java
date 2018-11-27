@@ -1,11 +1,14 @@
 package com.test.wsdl.wsdlwrapper.clients;
 
-import com.test.wsdl.documi.AccountGetLoginLinkResponse;
-import com.test.wsdl.documi.AccountGetUserDataResponse;
-import com.test.wsdl.documi.ObjectFactory;
+
+import com.test.wsdl.documi.account.AccountGetLoginLinkResponse;
+import com.test.wsdl.documi.account.AccountGetUserDataResponse;
+import com.test.wsdl.documi.account.ObjectFactory;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 
 import javax.xml.bind.JAXBElement;
+import javax.xml.ws.AsyncHandler;
+import java.util.concurrent.Future;
 
 
 public class DocumiAccountClient extends WebServiceGatewaySupport{
@@ -27,6 +30,14 @@ public class DocumiAccountClient extends WebServiceGatewaySupport{
     logger.info(">> Response: "  + response);
     return response.getValue();
   }
+
+  public Future<AccountGetLoginLinkResponse> getAsyncLogin(String token, AsyncHandler<AccountGetLoginLinkResponse> o ) {
+    com.test.wsdl.documi.account.AccountService accountService = new com.test.wsdl.documi.account.AccountService();
+    return (Future<AccountGetLoginLinkResponse>) accountService.getBasicHttpBindingIAccountService().accountGetLoginLinkAsync(token, o);
+  }
+
+
+
 
   public AccountGetUserDataResponse getUserData(String token) {
     JAXBElement<String> jaxbAccountGetUserData = OBJECT_FACTORY.createAccountGetUserDataToken(token);

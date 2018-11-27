@@ -2,7 +2,6 @@ package com.test.wsdl.wsdlwrapper;
 
 import com.test.wsdl.wsdlwrapper.clients.DocumiAccountClient;
 import com.test.wsdl.wsdlwrapper.services.AccountService;
-import com.test.wsdl.wsdlwrapper.services.AsyncAccountHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
@@ -17,22 +16,17 @@ public class BLZConfig {
   public Jaxb2Marshaller marshaller() {
 
     Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-    marshaller.setContextPath("com.test.wsdl.documi");
+    marshaller.setContextPath("com.test.wsdl.documi.account");
     return marshaller;
   }
 
-  @Bean
-  AsyncAccountHandler asyncAccountHandler() {
-    return new AsyncAccountHandler();
-  }
-
 
   @Bean
-  public DocumiAccountClient accountClient(Jaxb2Marshaller jaxb2Marshaller){
-      DocumiAccountClient client = new DocumiAccountClient("https://servizi-demo.youdox.it/fatturazione/api/AccountService.svc");
-      client.setMarshaller(jaxb2Marshaller);
-      client.setUnmarshaller(jaxb2Marshaller);
-      return  client;
+  public DocumiAccountClient accountClient(Jaxb2Marshaller jaxb2Marshaller) {
+    DocumiAccountClient client = new DocumiAccountClient("https://servizi-demo.youdox.it/fatturazione/api/AccountService.svc");
+    client.setMarshaller(jaxb2Marshaller);
+    client.setUnmarshaller(jaxb2Marshaller);
+    return client;
   }
 
   @Bean

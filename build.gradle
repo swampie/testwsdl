@@ -1,18 +1,19 @@
 configurations {
-	jaxb
+    wsimport
 }
 
 buildscript {
-	ext {
-		springBootVersion = '2.1.0.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+    ext {
+        springBootVersion = '2.1.0.RELEASE'
+    }
+    repositories {
+        mavenCentral()
 
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+
+    }
 
 
 }
@@ -22,78 +23,92 @@ apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
+
+
 group = 'com.test.wsdl'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
 sourceSets {
-	generated{
-		java.srcDir "${projectDir}/generated/"
-	}
+    generated {
+        java.srcDir "${projectDir}/generated/"
+    }
 
-	main {
-		compileClasspath += generated.output
-		runtimeClasspath += generated.output
-	}
+    main {
+        compileClasspath += generated.output
+        runtimeClasspath += generated.output
+    }
 
-	test {
-		compileClasspath += generated.output
-		runtimeClasspath += generated.output
-	}
+    test {
+        compileClasspath += generated.output
+        runtimeClasspath += generated.output
+    }
 }
 
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
-task genJaxb {
-	ext.sourcesDir = "${buildDir}/generated/"
-	ext.classesDir = "${buildDir}/classes/"
-	ext.schema = "${projectDir}/src/main/resources/wsdl/documi/invoice_service.wsdl"
-	ext.schemaDir = "${projectDir}/src/main/resources/wsdl/documi/"
-	ext.schemas = ["account":"${projectDir}/src/main/resources/wsdl/documi/account_service.wsdl",
-				   "invoice":"${projectDir}/src/main/resources/wsdl/documi/invoice_service.wsdl",
-				   "exchange":"${projectDir}/src/main/resources/wsdl/documi/exchange_service.wsdl"]
-	outputs.dir classesDir
+task wsimport {
+    ext.sourcesDir = "${buildDir}/generated/"
+    ext.classesDir = "${buildDir}/classes/"
+    ext.mappings = ["account" : "account_service.wsdl",
+                    "exchange": "exchange_service.wsdl",
+                    "invoice" : "invoice_service.wsdl"]
 
-	doLast() {
-		project.ant {
-			taskdef name: "xjc", classname: "com.sun.tools.xjc.XJCTask",
-					classpath: configurations.jaxb.asPath
-			mkdir(dir: sourcesDir)
-			mkdir(dir: classesDir)
-			xjc(destdir: sourcesDir, package: 'com.test.wsdl.documi') {
-				schema(dir: schemaDir, includes: "**/*.wsdl")
-				arg(value: "-wsdl")
-				produces(dir: sourcesDir, includes: "**/*.java")
-			}
+    outputs.dir classesDir
+    doLast {
+        ext.mappings.each { k, v ->
 
 
-			javac(destdir: classesDir, source: 1.8, target: 1.8, debug: true,
-					debugLevel: "lines,vars,source",
-					classpath: configurations.jaxb.asPath) {
-				src(path: sourcesDir)
-				include(name: "**/*.java")
-				include(name: "*.java")
-			}
+            ant {
+                mkdir(dir: sourcesDir)
+                mkdir(dir: classesDir)
+                taskdef(name: 'wsimport',
+                        classname: 'com.sun.tools.ws.ant.WsImport',
+                        classpath: configurations.wsimport.asPath
+                )
+                wsimport(keep: true,
+                        destdir: classesDir,
+                        sourcedestdir: sourcesDir,
+                        extension: "true",
+                        verbose: "true",
+                        quiet: "false",
+                        package: "com.test.wsdl.documi.${k}",
+                        xnocompile: "true",
+                        binding: "src/main/resources/wsdl/documi/${k}/bindings.xml",
+                        wsdl: "src/main/resources/wsdl/documi/${k}/${v}") {
+                    xjcarg(value: "-XautoNameResolution")
+                }
+                javac(destdir: classesDir, source: 1.8, target: 1.8, debug: true,
+                        debugLevel: "lines,vars,source",
+                        classpath: configurations.wsimport.asPath) {
+                    src(path: sourcesDir)
+                    include(name: "**/*.java")
+                    include(name: "*.java")
+                }
+                copy(todir: classesDir) {
+                    fileset(dir: sourcesDir, erroronmissingdir: false) {
+                        exclude(name: "**/*.java")
+                    }
+                }
+            }
 
+        }
+    }
 
-			copy(todir: classesDir) {
-				fileset(dir: sourcesDir, erroronmissingdir: false) {
-					exclude(name: "**/*.java")
-				}
-
-			}
-		}
-	}
 }
+
+
 
 dependencies {
-	implementation('org.springframework.boot:spring-boot-starter-web')
-	testImplementation('org.springframework.boot:spring-boot-starter-test')
-	compile('org.springframework.boot:spring-boot-starter-web-services')
-	compile(files(genJaxb.classesDir).builtBy(genJaxb))
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    compile('org.springframework.boot:spring-boot-starter-web-services')
+    wsimport 'com.sun.xml.ws:jaxws-tools:2.1.4'
+    compile('io.projectreactor:reactor-test')
+    compile(files(wsimport.classesDir).builtBy(wsimport))
 
-	jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"
+
 }
